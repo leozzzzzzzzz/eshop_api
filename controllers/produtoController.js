@@ -1,4 +1,4 @@
-const { getProdutosDB, addProdutoDB, updateProdutoDB, deleteProdutoDB, getProdutoPorCodigoDB } = require('../usecases/produtoUseCases')
+const { getProdutosDB, addProdutoDB, updateProdutoDB, deleteProdutoDB, getProdutoPorCodigoDB, updateProdutoDetalhesDB } = require('../usecases/produtoUseCases')
 
 const getProdutos = async (request, response) => {
     await getProdutosDB()
@@ -33,6 +33,18 @@ const updateProduto = async (request, response) => {
         }));
 }
 
+const updateProdutoDetalhes = async (request, response) => {
+    await updateProdutoDetalhesDB(request.body)
+        .then(data => response.status(200).json({
+            status: "success", message: "Produto alterada",
+            objeto: data
+        }))
+        .catch(err => response.status(400).json({
+            status: 'error',
+            message: err
+        }));
+}
+
 const deleteProduto = async (request, response) => {
     await deleteProdutoDB(parseInt(request.params.codigo))
         .then(data => response.status(200).json({
@@ -54,5 +66,5 @@ const getProdutoPorCodigo= async (request, response) => {
 }
 
 module.exports = {
-   getProdutos, addProduto, updateProduto, deleteProduto, getProdutoPorCodigo
+   getProdutos, addProduto, updateProduto, deleteProduto, getProdutoPorCodigo, updateProdutoDetalhes
 }
