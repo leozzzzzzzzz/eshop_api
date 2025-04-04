@@ -3,7 +3,7 @@ const Produto = require('../entities/produto');
 
 const getProdutosDB = async () => {
     try {    
-        const { rows } = await pool.query('SELECT * FROM produtos ORDER BY nome');  
+        const { rows } = await pool.query('SELECT * FROM produtos ORDER BY codigo');  
         return rows.map((produto) => new Produto(
             produto.codigo,
             produto.nome, 
