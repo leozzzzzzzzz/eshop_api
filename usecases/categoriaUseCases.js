@@ -63,22 +63,18 @@ const deleteCategoriaDB = async (codigo) => {
 
 const getCategoriaPorCodigoDB = async (codigo) => {
     try {
-        const results = await pool.query(
-            `SELECT * from categorias
-            WHERE codigo = $1`,[codigo]
-        )
-         if (results.rowCount == 0) {
-            throw `Nenhum registro encontrado com o código ${codigo}`
-         } else {
-            const categoria = results.row[0]
-            return new Categoria(categoria.codigo, categoria.nome)
-         }
-    } catch (err) {
-        throw "Erro : " + err;
+        const results = await pool.query(`SELECT * FROM categorias WHERE codigo = $1`,[codigo]);
+        if (results.rowCount == 0){
+            throw `Nenhum registro encontrado com o código ${codigo}`;
+        } else {
+            const categoria = results.rows[0];
+            return new Categoria(categoria.codigo, categoria.nome);
+        }
+    } catch(err){
+        throw "Erro ao recuperar a categoria: " + err
     }
+
 }
 
 
-module.exports = {
-    getCategoriasDB, getCategoriaPorCodigoDB, addCategoriaDB, updateCategoriaDB, deleteCategoriaDB
-}
+module.exports = { getCategoriasDB, getCategoriaPorCodigoDB, addCategoriaDB, updateCategoriaDB, deleteCategoriaDB }
