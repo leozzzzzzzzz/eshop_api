@@ -3,7 +3,7 @@ const Categoria = require('../entities/categoria')
 
 const getCategoriasDB = async () => {
     try {    
-        const { rows } = await pool.query('SELECT * FROM categorias ORDER BY nome');  
+        const { rows } = await pool.query('SELECT * FROM categorias ORDER BY codigo')
         return rows.map((categoria) => new Categoria(categoria.codigo, categoria.nome));
     } catch (err) {
         throw "Erro : " + err;

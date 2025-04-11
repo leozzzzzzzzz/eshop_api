@@ -3,7 +3,9 @@ const Produto = require('../entities/produto');
 
 const getProdutosDB = async () => {
     try {    
-        const { rows } = await pool.query('SELECT * FROM produtos ORDER BY codigo');  
+        const { rows } = await pool.query(
+            'SELECT p.*, c.nome as categoria_nome FROM produtos p join categorias c on p.categoria = c.codigo ORDER BY p.codigo'
+        );  
         return rows.map((produto) => new Produto(
             produto.codigo,
             produto.nome, 
@@ -12,7 +14,8 @@ const getProdutosDB = async () => {
             produto.ativo, 
             produto.valor, 
             produto.data_cadastro, 
-            produto.categoria
+            produto.categoria,
+            produto.categoria_nome
         ));
     } catch (err) {
         throw "Erro : " + err;
