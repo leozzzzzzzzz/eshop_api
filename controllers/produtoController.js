@@ -1,18 +1,18 @@
-const { getProdutosDB, addProdutoDB, updateProdutoDB, deleteProdutoDB, getProdutoPorCodigoDB, updateProdutoDetalhesDB } = require('../usecases/produtoUseCases')
+const { getProdutosDB, addProdutoDB, updateProdutoDB, deleteProdutoDB, getProdutoPorCodigoDB } = require('../usecases/produtoUseCases')
 
 const getProdutos = async (request, response) => {
     await getProdutosDB()
         .then(data => response.status(200).json(data))
         .catch(err => response.status(400).json({
             status: 'error',
-            message: 'Erro ao consultar as Produtos: ' + err
+            message: 'Erro ao consultar os produtos: ' + err
         }));
 }
 
 const addProduto = async (request, response) => {
     await addProdutoDB(request.body)
         .then(data => response.status(200).json({
-            status: "success", message: "Produto criada",
+            status: "success", message: "Produto criado",
             objeto: data
         }))
         .catch(err => response.status(400).json({
@@ -24,19 +24,7 @@ const addProduto = async (request, response) => {
 const updateProduto = async (request, response) => {
     await updateProdutoDB(request.body)
         .then(data => response.status(200).json({
-            status: "success", message: "Produto alterada",
-            objeto: data
-        }))
-        .catch(err => response.status(400).json({
-            status: 'error',
-            message: err
-        }));
-}
-
-const updateProdutoDetalhes = async (request, response) => {
-    await updateProdutoDetalhesDB(request.body)
-        .then(data => response.status(200).json({
-            status: "success", message: "Produto alterada",
+            status: "success", message: "Produto alterado",
             objeto: data
         }))
         .catch(err => response.status(400).json({
@@ -66,5 +54,5 @@ const getProdutoPorCodigo= async (request, response) => {
 }
 
 module.exports = {
-   getProdutos, addProduto, updateProduto, deleteProduto, getProdutoPorCodigo, updateProdutoDetalhes
+   getProdutos, addProduto, updateProduto, deleteProduto, getProdutoPorCodigo
 }
